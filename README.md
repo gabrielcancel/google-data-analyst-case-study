@@ -3,7 +3,7 @@
 During the google data analyst course, we need to do a case study to apply our competences
 <br>
 
-## The main question of this case study is : How to convert casual to member ?
+## The main question of this case study is : How to convert a casual to a member ?
 
 <br>
 
@@ -14,7 +14,7 @@ All data is available [here](https://divvy-tripdata.s3.amazonaws.com/index.html)
 
 ## Ask
 
-The questions we need to be answered are:
+The questions we need to have answered are:
 
 1. How do annual members and casual riders use Cyclistic bikes differently?
 2. Why would casual riders buy Cyclistic annual memberships?
@@ -22,12 +22,12 @@ The questions we need to be answered are:
 
 ## Prepare
 
-During the prepare step, we downloaded need to download data and storing it. The data is split into 12 zip files containing each a dataset corresponding to one month. I downloaded the last 12 months zip files and extract them into one folder. We don't need to extract the data because the files format is csv.
+During the prepare step, we need to download the data and store it. The data is split into 12 zip files, each containing a dataset corresponding to one month. I downloaded the last 12 months zip files and extracted them into one folder. We don't need to convert the data because the files format is csv.
 
 ## Process
 
 
-During the process phase, I first started doing it on RStudio but after several latency phases I decided to do it with Python on Jupiter NoteBook.
+I first started doing the process phase on RStudio but after several latency issues, I decided to use Python with Jupiter NoteBook.
 
 ### Packages import
 
@@ -108,7 +108,7 @@ def distance(lat1, lon1, lat2, lon2, R=6371):
     return R * c * 1000
 ```
 
-You can use the function to do the calculation. 
+You can use this function to do the calculation. 
 
 A new column is created for the distance travelled.
 
@@ -147,7 +147,7 @@ Output:
 | 87858 | 2020-12-15 12:12:43 | 2020-11-25 08:42:16 | -29010.450000 |
 | 90888 | 2020-12-15 11:34:38 | 2020-11-25 08:09:43 | -29004.916667 |
 
-We see that we have negative durations. Delete negative duration.
+We see that we have negative durations. Delete negative durations.
 
 ```python
 df = df[df['started_at'] < df['ended_at']]
@@ -165,7 +165,7 @@ Let’s take a look at the breakdown over the days of the week
 df['day_of_week'].value_counts()
 ```
 
-## Calculates on different variable
+## Calculations on different variable
 
 ### Ride Length mean
 
@@ -199,12 +199,11 @@ Now save the final dataset.
 df.to_csv("cs1_df.csv")
 ```
 
-> Analyze
-> 
+## Analyze
 
-During the analysis phase, we need to process or clean up the data. 
+During the analysis phase, we need to process and clean up the data. 
 
-We will use Rsudio on our dataset to be able to view the data.
+We will use RSudio on our dataset to be able to view the data.
 
 ### First we have to load some packages
 
@@ -235,10 +234,10 @@ ggplot(df)+
 
 ## Observation
 
-- The use of casuals is much higher on weekends especially on Saturdays, unlike members.
+- The use of casuals is much higher on weekends, especially on Saturdays, unlike members.
 - The casual use is much lower during the week unlike that of the members. The members are probably people who use bicycles to get to work.
 - Members have a preference for classic bikes.
-- The casuals are the only ones who used the docked bike.
+- The casuals are the only ones who use the docked bike.
 
 ### We want to plot the differences in duration between members and casuals
 
@@ -253,7 +252,7 @@ ggplot(filter(df, df$ride_duration < 100))+
 
 ## Observation
 
-- We can simply say that members do a lot more short-term trips than casual employees do.
+- We observe that members do a lot more short-term trips than casual employees do.
 
 ### We want to plot distance traveled in meters for casuals and members
 
@@ -270,7 +269,7 @@ ggplot(filter(df, df$ride_length < 10000))+
 
 ## Observation
 
-- It was noted that members are much closer than casual users.
+- We observe that members travel shorter distances than casuals.
 
 ### Now let’s create two datasets for both categories, member and casual
 
@@ -279,7 +278,7 @@ df_member <- filter(df, member_casual=="member")
 df_casual <- filter(df, member_casual=="casual")
 ```
 
-## Compare this two dataset**
+## Compare this two dataset
 
 ```r
 summary(drop_na(select(df_member, c("day_of_week","ride_duration","ride_length"))))
@@ -299,17 +298,17 @@ With this comparison we notice that the mean distance traveled is approximately 
 
 ### Problem of the case study
 
-How to convert casual to member ?
+How to convert a casual to a member ?
 
-It is quite complex to answer the question, but we have made the following observations.
+The answer to this question is quite complexe, but we have made the following observations:
 
-- Saturday is the day you have the most bike use.
-- The mean ride length of all users is 2200 meters
+- Saturday is the day with the most activity.
+- The mean ride length of all users is 2200 meters.
 - The maximum duration travelled is abnormally long in the casuals, that is to say 38 days.
 - The classic bike is the most popular in both cases.
 
-Using our observations, however, the following suggestions can be made:
+With our observations, the following suggestions can be made:
 
 - It would certainly be relevant to raise the price on the weekend. It would become more profitable for casual users to become a member.
+- We are also in a period where bike services are in high demand. It may be appropriate to offer rapid repair and restoration services. This idea, nevertheless, requires further market research and analysis.
 - We are currently in a world where the environment is at the heart of our thinking. Why not do a targeted campaign to show people the benefits of using bicycles for the planet.
-- We are also in a period where services are in high demand. It may be appropriate to offer rapid repair and restoration services. This idea nevertheless requires further market research and analysis.
